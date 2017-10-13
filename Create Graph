@@ -1,0 +1,8 @@
+from arango import ArangoClient
+client = ArangoClient(protocol='http',host='localhost',port=8529,username='root',password='',enable_logging=True)
+graph = client.db('Enron').create_graph('Enron_graph')
+people = graph.create_vertex_collection('people')
+email = graph.create_edge_definition(name='email',from_collections=['people'],to_collections=['people'])
+people.insert({'_key':'kenlay','name':'Ken Lay','position':'Chairman & CEO','company':'Enron Crop.'})
+people.insert({'_key':'jeffskilling','name':'Jeff Skilling','position':'President & COO','company':'Enron Crop.'})
+email.insert({'_from':'people/kenlay','_to':'people/jeffskilling'})
